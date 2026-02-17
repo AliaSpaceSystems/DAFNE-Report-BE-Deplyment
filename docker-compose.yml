@@ -7,7 +7,7 @@ services:
     restart: always
     image: "library/postgres:17"
     env_file:
-      - /data/dafne-report/config/db_credentials.env
+      - /data/dafne-report/db/config/db_credentials.env
     networks:
       - dafne-report
     ports:
