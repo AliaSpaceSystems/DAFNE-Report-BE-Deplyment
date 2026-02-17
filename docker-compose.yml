@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  dafne-report-db:
+    container_name: dafne-report-db
+    hostname: dafne-report-db
+    restart: always
+    image: "library/postgres:17"
+    env_file:
+      - /data/dafne-report/config/db_credentials.env
+    networks:
+      - dafne-report
+    ports:
+      - "5435:5432"
+    volumes:
+      - /data/dafne-report/db/:/var/lib/postgresql/data
+
+  dafne-report-be:
+    image: "aliaspace/dafne-report:be-4.2.0"
+    container_name: dafne-report-be
+    hostname: dafne-report-be
+    restart: always
+    build: .
+    command: bash -c "npx drizzle-kit push && tsx ./src/www.ts"
+    ports:
+      - "3000:2000"
+    networks:
+      - dafne-report
+    volumes:
+      # create a 'config' folder in the working dir and bind it to an external folder of the host, where the config.json file is located
+      - /data/dafne-report/back-end/config:/usr/src/app/config
+      # create a 'log' folder in the working dir and binds it to an external folder of the host, to make the logs persistent
+      - /data/dafne-report/back-end/logs:/usr/src/app/logs
+
+networks:
+  dafne-report:
+    driver: bridge
