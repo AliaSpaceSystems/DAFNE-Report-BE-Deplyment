@@ -11,7 +11,7 @@ services:
     networks:
       - dafne-report
     ports:
-      - "5435:5432"
+      - "<docker-image-db-port>:5432"
     volumes:
       - /data/dafne-report/db/:/var/lib/postgresql/data
 
@@ -20,17 +20,15 @@ services:
     container_name: dafne-report-be
     hostname: dafne-report-be
     restart: always
-    build: .
-    command: bash -c "npx drizzle-kit push && tsx ./src/www.ts"
+    command: bash -c "npm run start"
     ports:
-      - "3000:2000"
+      - "<docker-image-be-port>:3000"
     networks:
       - dafne-report
     volumes:
-      # create a 'config' folder in the working dir and bind it to an external folder of the host, where the config.json file is located
       - /data/dafne-report/back-end/config:/usr/src/app/config
-      # create a 'log' folder in the working dir and binds it to an external folder of the host, to make the logs persistent
       - /data/dafne-report/back-end/logs:/usr/src/app/logs
+      - <gss-log-folder-path>:/usr/src/app/test_logs:ro
 
 networks:
   dafne-report:
