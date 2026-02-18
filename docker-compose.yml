@@ -13,7 +13,7 @@ services:
     ports:
       - "<docker-image-db-port>:5432"
     volumes:
-      - /data/dafne-report/db/:/var/lib/postgresql/data
+      - /data/dafne-report/db/data/:/var/lib/postgresql/data
 
   dafne-report-be:
     image: "aliaspace/dafne-report:be-4.2.0"
