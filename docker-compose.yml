@@ -28,7 +28,7 @@ services:
     volumes:
       - /data/dafne-report/back-end/config:/usr/src/app/config
       - /data/dafne-report/back-end/logs:/usr/src/app/logs
-      - <gss-log-folder-path>:/usr/src/app/test_logs:ro
+      - <gss-log-folder-path>:/usr/src/app/gss_logs:ro
 
 networks:
   dafne-report:
