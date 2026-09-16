@@ -20,7 +20,7 @@ services:
     container_name: dafne-report-be
     hostname: dafne-report-be
     restart: always
-    command: bash -c "npm run start"
+    command: npm run start
     ports:
       - "<docker-image-be-port>:3000"
     networks:
@@ -33,7 +33,3 @@ services:
 networks:
   dafne-report:
     driver: bridge
-    ipam:
-        driver: default
-        config:
-          - subnet: 172.16.0.0/16
